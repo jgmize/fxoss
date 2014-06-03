@@ -1,1 +1,8 @@
-#*/5 * * * * %(user)s %(manage)s poll_twitter
+#min hour dom month dow cmd
+{% if pg_backup_dir -%}
+0 * * * * postgres pg_dump {{proj_name}} | gzip > {{pg_backup_dir}}/{{proj_name}}-`date +%FT%T`.sql.gz
+0 0 * * * postgres cd {{pg_backup_dir}} && rm -f {{proj_name}}-`date +%F -d '4 days ago'`*.sql.gz
+{%- endif %}
+{% if media_backup_dir -%}
+0 * * * * {{user}} rsync -av {{proj_path}}/media/ {{media_backup_dir}}
+{%- endif %}

@@ -59,8 +59,11 @@ env.nevercache_key = conf.get("NEVERCACHE_KEY", "")
 env.default_from_email = conf.get("DEFAULT_FROM_EMAIL", "")
 env.email_host = conf.get("EMAIL_HOST", "")
 env.server_email = conf.get("SERVER_EMAIL", "")
+
 env.basic_auth = conf.get("BASIC_AUTH", "")
 
+env.pg_backup_dir = conf.get("PG_BACKUP_DIR", "")
+env.media_backup_dir = conf.get("MEDIA_BACKUP_DIR", "")
 
 ##################
 # Template setup #
@@ -92,6 +95,7 @@ templates = {
         "remote_path": "/etc/cron.d/%(proj_name)s",
         "owner": "root",
         "mode": "600",
+        "jinja": "true"
     },
     "gunicorn": {
         "local_path": "deploy/gunicorn.conf.py",
