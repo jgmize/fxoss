@@ -559,6 +559,8 @@ def deploy():
         with update_changed_requirements():
             run("git pull origin master -f" if git else "hg pull && hg up -C")
         manage("collectstatic -v 0 --noinput")
+        with project():
+            run('chmod -R o+rX static')
         manage("syncdb --noinput")
         manage("migrate --noinput")
     gunicorn('restart')
